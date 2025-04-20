@@ -64,7 +64,7 @@ class Q_Learning():
             action = action_prime
             time_steps += 1
 
-        return time_steps
+        return time_steps,reward
 
     def train(self,num_episodes:int):
         '''
