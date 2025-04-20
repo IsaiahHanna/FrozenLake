@@ -64,7 +64,7 @@ class Sarsa():
             action = action_prime
             time_steps += 1
 
-        return time_steps
+        return time_steps,reward
 
     def train(self,num_episodes:int):
         '''
@@ -78,10 +78,13 @@ class Sarsa():
         '''
         time = pd.DataFrame({
             "episodes": [num for num in range(num_episodes)],
-            "time_steps" : [0 for time in range(num_episodes)]
+            "time_steps" : [0 for time in range(num_episodes)],
+            "reward" : [0 for reward in range(num_episodes)]
         })
         for ep in range(num_episodes):
-            time.at[ep,"time_steps"] = self.episode()
+            steps,reward = self.episode()
+            time.at[ep,"time_steps"] = steps
+            time.at[ep,"reward"] = reward
 
         return time
     
