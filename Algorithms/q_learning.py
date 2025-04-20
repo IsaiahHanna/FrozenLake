@@ -80,17 +80,17 @@ class Q_Learning():
         Returns:
         time: pd.Dataframe containing the number of steps each episode took
         '''
-        time = pd.DataFrame({
+        results = pd.DataFrame({
             "episodes": [num for num in range(num_episodes)],
             "time_steps" : [0 for time in range(num_episodes)],
             "reward" : [0 for reward in range(num_episodes)]
         })
         for ep in range(num_episodes):
             steps,reward = self.episode()
-            time.at[ep,"time_steps"] = steps
-            time.at[ep,"reward"] = reward
+            results.at[ep,"time_steps"] = steps
+            results.at[ep,"reward"] = reward
 
-        return time
+        return results
     
     def watch(self,env_name,**kwargs):
         '''
