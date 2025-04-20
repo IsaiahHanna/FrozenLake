@@ -1,15 +1,19 @@
 import time
+import random
 import numpy as np
 import pandas as pd
 import gym
 
 class Sarsa():
-    def __init__(self,env,eps=0.1,gamma= 0.95,stepsize = 0.05):
+    def __init__(self,env,seed = 42,eps=0.1,gamma= 0.95,stepsize = 0.05):
         self.env = env
+        self.seed = seed
         self.eps = eps
         self.gamma = gamma
         self.stepsize = stepsize
         self.Q = np.zeros((env.observation_space.n,env.action_space.n))
+        np.random.seed(seed)
+        random.seed(seed)
 
     def greedy(self,s):
         '''
@@ -51,7 +55,7 @@ class Sarsa():
         if env == None:
             env = self.env
         time_steps = 0 
-        s,_ = env.reset()
+        s,_ = env.reset(seed = self.seed)
         terminated = False
 
         action = self.eps_greedy(s)
@@ -101,7 +105,7 @@ class Sarsa():
         '''
         watch_env = gym.make(env_name,**kwargs,render_mode = "human")
         
-        s,_ = watch_env.reset()
+        s,_ = watch_env.reset(seed = self.seed)
         terminated = False
         while not terminated:
             action = self.greedy(s) # Note that we use greedy() instead of eps_greedy() as we no longer want to explore.
